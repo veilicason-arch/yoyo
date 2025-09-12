@@ -27,8 +27,8 @@ export default function LandingPage() {
     },
     {
       icon: <BarChart3 className="h-6 w-6" />,
-      title: "Multiple Timeframes",
-      description: "Analyze from 1-minute to weekly charts for different trading strategies"
+      title: "15-Minute Analysis",
+      description: "Optimized 15-minute timeframe analysis for precise trading signals"
     },
     {
       icon: <Shield className="h-6 w-6" />,
@@ -109,11 +109,8 @@ export default function LandingPage() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" onClick={handleLogin} className="text-lg px-8 py-6" data-testid="button-get-started">
-              Get Started Free
+              Sign In
               <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-6">
-              View Demo
             </Button>
           </div>
 
@@ -181,8 +178,8 @@ export default function LandingPage() {
               },
               {
                 step: "02", 
-                title: "Choose Timeframe",
-                description: "Select from 1-minute to weekly charts based on your strategy"
+                title: "Get Analysis",
+                description: "Receive professional 15-minute timeframe analysis instantly"
               },
               {
                 step: "03",
@@ -250,7 +247,7 @@ export default function LandingPage() {
           </div>
           
           <Button size="lg" onClick={handleLogin} className="text-lg px-8 py-6" data-testid="button-cta">
-            Start Free Analysis
+            Sign In
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>

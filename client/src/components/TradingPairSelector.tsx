@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -12,8 +11,8 @@ interface TradingPairSelectorProps {
 
 export default function TradingPairSelector({ onAnalyze, isLoading = false }: TradingPairSelectorProps) {
   const [selectedPair, setSelectedPair] = useState("BTCUSDT");
-  const [timeframe, setTimeframe] = useState("1h");
   const [customPair, setCustomPair] = useState("");
+  const timeframe = "15m"; // Fixed to 15-minute timeframe
 
   // Mock popular pairs - in real app these would come from API
   const popularPairs = [
@@ -21,15 +20,6 @@ export default function TradingPairSelector({ onAnalyze, isLoading = false }: Tr
     "BNBUSDT", "SOLUSDT", "MATICUSDT", "AVAXUSDT", "LTCUSDT"
   ];
 
-  const timeframes = [
-    { value: "1m", label: "1 Minute" },
-    { value: "5m", label: "5 Minutes" },
-    { value: "15m", label: "15 Minutes" },
-    { value: "1h", label: "1 Hour" },
-    { value: "4h", label: "4 Hours" },
-    { value: "1d", label: "1 Day" },
-    { value: "1w", label: "1 Week" }
-  ];
 
   const handleAnalyze = () => {
     const pair = customPair || selectedPair;
@@ -88,22 +78,6 @@ export default function TradingPairSelector({ onAnalyze, isLoading = false }: Tr
           </div>
         </div>
 
-        {/* Timeframe Selection */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-muted-foreground">Timeframe</label>
-          <Select value={timeframe} onValueChange={setTimeframe}>
-            <SelectTrigger data-testid="select-timeframe">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {timeframes.map((tf) => (
-                <SelectItem key={tf.value} value={tf.value}>
-                  {tf.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
 
         {/* Analyze Button */}
         <Button 

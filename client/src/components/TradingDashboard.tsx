@@ -9,8 +9,8 @@ export default function TradingDashboard() {
   const [currentAnalysis, setCurrentAnalysis] = useState<SignalData | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  // Mock recent analyses for dashboard
-  const recentAnalyses = [ //todo: remove mock functionality
+  // Recent analyses (could be fetched from API in future)
+  const recentAnalyses = [
     { pair: "ETHUSDT", signal: "BUY", confidence: 82, time: "2m ago" },
     { pair: "ADAUSDT", signal: "HOLD", confidence: 65, time: "15m ago" },
     { pair: "DOTUSDT", signal: "SELL", confidence: 73, time: "32m ago" },
@@ -19,44 +19,68 @@ export default function TradingDashboard() {
 
   const handleAnalyze = async (pair: string, timeframe: string) => {
     setIsAnalyzing(true);
-    console.log(`Starting analysis for ${pair} on ${timeframe}`);
     
-    // Simulate API call - in real app this would call the backend
-    setTimeout(() => {
-      // Mock analysis result //todo: remove mock functionality
-      const mockResult: SignalData = {
-        pair,
-        timeframe,
-        overallSignal: Math.random() > 0.5 ? "BUY" : Math.random() > 0.5 ? "SELL" : "HOLD",
-        confidence: Math.floor(Math.random() * 40) + 60,
-        currentPrice: Math.random() * 50000 + 30000,
-        priceChange24h: (Math.random() - 0.5) * 10,
+    try {
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ pair, timeframe }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Analysis failed');
+      }
+      
+      const apiResult = await response.json();
+      
+      // Transform API response to match SignalData interface
+      const result: SignalData = {
+        pair: apiResult.pair,
+        timeframe: apiResult.timeframe,
+        overallSignal: apiResult.signal,
+        confidence: apiResult.confidence,
+        currentPrice: apiResult.last_price,
+        priceChange24h: apiResult.price_change_24h || 0,
         indicators: [
           {
             name: "RSI (14)",
-            value: Math.random() * 100,
-            signal: Math.random() > 0.5 ? "BUY" : "SELL",
+            value: apiResult.indicators.rsi,
+            signal: apiResult.indicators.rsi < 30 ? "BUY" : apiResult.indicators.rsi > 70 ? "SELL" : "HOLD",
             description: "Momentum indicator showing current market conditions"
           },
           {
-            name: "EMA (20/50)",
-            value: Math.random() * 50000 + 30000,
-            signal: Math.random() > 0.5 ? "BUY" : "HOLD",
+            name: "EMA (12/26)",
+            value: apiResult.indicators.ema_short,
+            signal: apiResult.indicators.ema_short > apiResult.indicators.ema_long ? "BUY" : "SELL",
             description: "Exponential moving average crossover analysis"
           },
           {
-            name: "Stochastic (14,3,3)",
-            value: Math.random() * 100,
-            signal: Math.random() > 0.5 ? "BUY" : "SELL",
+            name: "Stochastic (14,3)",
+            value: apiResult.indicators.stoch_k,
+            signal: apiResult.indicators.stoch_k < 20 ? "BUY" : apiResult.indicators.stoch_k > 80 ? "SELL" : "HOLD",
             description: "Oscillator indicating overbought/oversold conditions"
+          },
+          {
+            name: "MACD",
+            value: apiResult.indicators.macd,
+            signal: apiResult.indicators.macd > apiResult.indicators.macd_signal ? "BUY" : "SELL",
+            description: "Moving Average Convergence Divergence trend indicator"
           }
         ],
-        timestamp: new Date().toLocaleString() + " UTC"
+        timestamp: new Date(apiResult.timestamp).toLocaleString() + " UTC",
+        reason: apiResult.reason
       };
       
-      setCurrentAnalysis(mockResult);
+      setCurrentAnalysis(result);
+    } catch (error) {
+      console.error('Analysis error:', error);
+      // Show error state or fallback
+      setCurrentAnalysis(null);
+    } finally {
       setIsAnalyzing(false);
-    }, 2000);
+    }
   };
 
   const getSignalColor = (signal: string) => {

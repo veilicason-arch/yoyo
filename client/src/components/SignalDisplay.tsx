@@ -22,6 +22,7 @@ export interface SignalData {
   priceChange24h: number;
   indicators: TechnicalIndicator[];
   timestamp: string;
+  reason?: string;
 }
 
 interface SignalDisplayProps {

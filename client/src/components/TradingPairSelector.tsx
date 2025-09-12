@@ -24,7 +24,6 @@ export default function TradingPairSelector({ onAnalyze, isLoading = false }: Tr
   const handleAnalyze = () => {
     const pair = customPair || selectedPair;
     onAnalyze(pair, timeframe);
-    console.log(`Analyzing ${pair} on ${timeframe} timeframe`);
   };
 
   const handleQuickSelect = (pair: string) => {

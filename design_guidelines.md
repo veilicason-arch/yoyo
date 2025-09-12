@@ -15,7 +15,7 @@
 **Dark Mode Primary (Trading Focus):**
 - Background: 220 15% 8% (deep charcoal)
 - Surface: 220 12% 12% (elevated cards)
-- Primary: 142 76% 36% (professional green for profits/buy signals)
+- Primary: 174 100% 40% (neon lightning glow dark tosca green for profits/buy signals)
 - Danger: 0 84% 60% (clear red for sell signals)
 - Warning: 38 92% 50% (amber for hold/neutral signals)
 - Text Primary: 220 15% 95% (high contrast white)
@@ -24,7 +24,7 @@
 **Light Mode:**
 - Background: 220 20% 98% (clean white)
 - Surface: 220 15% 96% (subtle gray cards)
-- Primary: 142 76% 28% (darker green for accessibility)
+- Primary: 174 100% 25% (neon lightning glow dark tosca green for accessibility)
 - Same danger/warning colors with adjusted lightness
 
 ### B. Typography

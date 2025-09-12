@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { TrendingUp, TrendingDown, Minus, AlertTriangle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatCryptoPrice } from "@/lib/utils";
 
 export type SignalType = "BUY" | "SELL" | "HOLD";
 
@@ -87,7 +87,7 @@ export default function SignalDisplay({ data }: SignalDisplayProps) {
             <div>
               <div className="text-sm text-muted-foreground">Current Price</div>
               <div className="text-2xl font-bold font-mono" data-testid="text-current-price">
-                ${data.currentPrice.toLocaleString()}
+                {formatCryptoPrice(data.currentPrice)}
               </div>
             </div>
             <div>

@@ -17,7 +17,7 @@ export default function TradingPairSelector({ onAnalyze, isLoading = false }: Tr
   // Mock popular pairs - in real app these would come from API
   const popularPairs = [
     "BTCUSDT", "ETHUSDT", "ADAUSDT", "DOTUSDT", "LINKUSDT", 
-    "BNBUSDT", "SOLUSDT", "MATICUSDT", "AVAXUSDT", "LTCUSDT"
+    "BNBUSDT", "SOLUSDT", "PEPEUSDT", "SHIBUSDT", "LTCUSDT"
   ];
 
 
